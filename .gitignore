@@ -1,0 +1,3 @@
+# Dynamically generated files we don't want to keep
+*.pyc
+*.swp
