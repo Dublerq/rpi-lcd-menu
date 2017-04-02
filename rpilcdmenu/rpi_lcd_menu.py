@@ -12,13 +12,13 @@ class RpiLCDMenu(object):
 	LCD_FUNCTIONSET         = 0x20
 	LCD_SETCGRAMADDR        = 0x40
 	LCD_SETDDRAMADDR        = 0x80
- 
+
 	# flags for display entry mode
 	LCD_ENTRYRIGHT          = 0x00
 	LCD_ENTRYLEFT           = 0x02
 	LCD_ENTRYSHIFTINCREMENT = 0x01
 	LCD_ENTRYSHIFTDECREMENT = 0x00
- 
+
 	# flags for display on/off control
 	LCD_DISPLAYON           = 0x04
 	LCD_DISPLAYOFF          = 0x00
@@ -26,17 +26,17 @@ class RpiLCDMenu(object):
 	LCD_CURSOROFF           = 0x00
 	LCD_BLINKON             = 0x01
 	LCD_BLINKOFF            = 0x00
- 
+
 	# flags for display/cursor shift
 	LCD_DISPLAYMOVE         = 0x08
 	LCD_CURSORMOVE          = 0x00
- 
+
 	# flags for display/cursor shift
 	LCD_DISPLAYMOVE         = 0x08
 	LCD_CURSORMOVE          = 0x00
 	LCD_MOVERIGHT           = 0x04
 	LCD_MOVELEFT            = 0x00
- 
+
 	# flags for function set
 	LCD_8BITMODE            = 0x10
 	LCD_4BITMODE            = 0x00
@@ -44,7 +44,7 @@ class RpiLCDMenu(object):
 	LCD_1LINE               = 0x00
 	LCD_5x10DOTS            = 0x04
 	LCD_5x8DOTS             = 0x00
-	
+
 	def __init__(self, pin_rs=26, pin_e=19, pins_db=[13, 6, 5, 21], GPIO=None):
 		"""
 		description here
@@ -60,11 +60,16 @@ class RpiLCDMenu(object):
 		self.GPIO.setmode(GPIO.BCM)
 		self.GPIO.setup(self.pin_e, GPIO.OUT)
 		self.GPIO.setup(self.pin_rs, GPIO.OUT)
- 
+
 		for pin in self.pins_db:
 			self.GPIO.setup(pin, GPIO.OUT)
 		self.__initDisplay()
 		self.clearDisplay()
+
+		self.items = list()
+		self.parent = None
+		self.current_option = 0
+		self.selected_option = -1
 
 	def __initDisplay(self):
 		self.__write4bits(0x33)  # initialization
@@ -72,16 +77,16 @@ class RpiLCDMenu(object):
 		self.__write4bits(0x28)  # 2 line 5x7 matrix
 		self.__write4bits(0x0C)  # turn cursor off 0x0E to enable cursor
 		self.__write4bits(0x06)  # shift cursor right
- 
+
 		self.displaycontrol = self.LCD_DISPLAYON | self.LCD_CURSOROFF | self.LCD_BLINKOFF
- 
+
 		self.displayfunction = self.LCD_4BITMODE | self.LCD_1LINE | self.LCD_5x8DOTS
 		self.displayfunction |= self.LCD_2LINE
- 
+
 		# Initialize to default text direction (for romance languages)
 		self.displaymode = self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
 		self.__write4bits(self.LCD_ENTRYMODESET | self.displaymode)  # set the entry mode
-	
+
 	def __write4bits(self, bits, char_mode=False):
 		""" Send command to LCD """
 		self.__delayMicroseconds(1000)  # 1000 microsecond sleep
@@ -112,7 +117,7 @@ class RpiLCDMenu(object):
 		self.GPIO.output(self.pin_e, False)
 		self.__delayMicroseconds(1)	   # commands need > 37us to settle
 
-	def clearDisplay(self):	
+	def clearDisplay(self):
 		"""
 		Clear LCD Screen
 		"""
@@ -126,7 +131,7 @@ class RpiLCDMenu(object):
 				self.__write4bits(0xC0)  # next line
 			else:
 				self.__write4bits(ord(char), True)
-	
+
 	def longMessage(self, text):
 		""" Send long string to LCD. 17 char wraps to second line"""
 		i = 0
@@ -134,10 +139,105 @@ class RpiLCDMenu(object):
 			self.__write4bits(ord(char), True)
 			i = i+1
 			if i == 16:
-				self.__write4bits(0xC0) 
+				self.__write4bits(0xC0)
+
+	def append_item(self, item):
+		"""
+		Add an item to the end of the menu
+		:param MenuItem item: The item to be added
+		"""
+		item.menu = self
+		self.items.append(item)
+
+	def debug(self):
+		for item in self.items:
+			print "%s" % (item.__str__())
 
 	def displayTestScreen(self):
 		"""
 		Display test screen to see if your LCD screen is wokring
 		"""
 		self.message('Hum. body 36,6\xDFC\nThis is test')
+
+	def start(self):
+		"""
+		Start and render menu
+		"""
+		self.parent = None
+		self.current_option = 0
+		self.selected_option = -1
+		self.render()
+
+	def render(self):
+		"""
+		Render option
+		"""
+
+
+	def processUp(self):
+		"""
+		User triggered up event
+		"""
+
+	def processDown(self):
+		"""
+		User triggered down event
+		"""
+
+	def processEnter(self):
+		"""
+		User triggered enter event
+		"""
+
+class MenuItem(object):
+    """
+    A generic menu item
+    """
+
+    def __init__(self, text, menu=None):
+        """
+        :ivar str text: The text shown for this menu item
+        :ivar RpiLCDMenu menu: The menu to which this item belongs
+        """
+        self.text = text
+        self.menu = menu
+
+    def __str__(self):
+        return "%s" % (self.text)
+
+    def show(self, index):
+        """
+        How this item should be displayed in the menu. Can be overridden, but should keep the same signature.
+        Default is:
+            1 - Item 1
+            2 - Another Item
+        :param int index: The index of the item in the items list of the menu
+        :return: The representation of the item to be shown in a menu
+        :rtype: str
+        """
+        return "%d - %s" % (index + 1, self.text)
+
+    def set_up(self):
+        """
+        Override to add any setup actions necessary for the item
+        """
+        pass
+
+    def action(self):
+        """
+        Override to carry out the main action for this item.
+        """
+        pass
+
+    def clean_up(self):
+        """
+        Override to add any cleanup actions necessary for the item
+        """
+        pass
+
+    def get_return(self):
+        """
+        Override to change what the item returns.
+        Otherwise just returns the same value the last selected item did.
+        """
+        return self.menu.returned_value

@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 from rpilcdmenu import *
-from rpilcdmenu.items import *
 
 def main():
 	menu = RpiLCDMenu(26,19,[13, 6, 5, 21])
