@@ -13,8 +13,13 @@ def main():
 	menu.append_item(function_item2)
 	menu.append_item(function_item3)
 	menu.append_item(function_item4)
-	menu.debug()
-	#menu.start()
+	menu.start()
+	menu.processEnter()
+	menu.processDown()
+	menu.processDown()
+	menu.processEnter()
+	menu.processUp()
+	menu.processEnter()
 
 def fooMethod(item_index):
 	"""
