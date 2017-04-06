@@ -186,6 +186,7 @@ class RpiLCDMenu(object):
             options += "\n" + self.items[self.current_option + 1].text
         else:
             options += "\n" + self.items[0].text
+        self.clearDisplay()
         self.message(options)
 
     def processUp(self):
