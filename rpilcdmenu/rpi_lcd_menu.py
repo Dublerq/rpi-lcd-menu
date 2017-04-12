@@ -176,16 +176,16 @@ class RpiLCDMenu(object):
             self.message('Menu is empty')
             return
         elif len(self.items) <= 2:
-            options = self.items[0].text
+            options = ">" + self.items[0].text
             if (len(self.items) == 2):
-                options += "\n" + self.items[1].text
+                options += "\n " + self.items[1].text
             self.message(options)
             return
-        options = self.items[self.current_option].text
+        options = ">" + self.items[self.current_option].text
         if self.current_option + 1 < len(self.items):
-            options += "\n" + self.items[self.current_option + 1].text
+            options += "\n " + self.items[self.current_option + 1].text
         else:
-            options += "\n" + self.items[0].text
+            options += "\n " + self.items[0].text
         self.clearDisplay()
         self.message(options)
 
@@ -225,6 +225,8 @@ class MenuItem(object):
         :ivar str text: The text shown for this menu item
         :ivar RpiLCDMenu menu: The menu to which this item belongs
         """
+        if len(text) > 15 or len(text) == 0:
+            raise NameError('MenuTextTooLong');
         self.text = text
         self.menu = menu
 
