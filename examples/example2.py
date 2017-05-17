@@ -1,5 +1,9 @@
 #!/usr/bin/python
 
+"""
+single level menu
+"""
+
 from rpilcdmenu import *
 from rpilcdmenu.items import *
 

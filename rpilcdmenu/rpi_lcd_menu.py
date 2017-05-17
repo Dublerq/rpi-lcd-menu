@@ -1,7 +1,8 @@
-
+from basic_menu import *
+from menu_item import *
 from time import sleep
 
-class RpiLCDMenu(object):
+class RpiLCDMenu(BasicMenu):
 
     # commands
     LCD_CLEARDISPLAY        = 0x01
@@ -65,11 +66,7 @@ class RpiLCDMenu(object):
             self.GPIO.setup(pin, GPIO.OUT)
         self.__initDisplay()
         self.clearDisplay()
-
-        self.items = list()
-        self.parent = None
-        self.current_option = 0
-        self.selected_option = -1
+        super(self.__class__, self).__init__()
 
     def __initDisplay(self):
         self.__write4bits(0x33)  # initialization
@@ -141,32 +138,11 @@ class RpiLCDMenu(object):
             if i == 16:
                 self.__write4bits(0xC0)
 
-    def append_item(self, item):
-        """
-        Add an item to the end of the menu
-        :param MenuItem item: The item to be added
-        """
-        item.menu = self
-        self.items.append(item)
-
-    def debug(self):
-        for item in self.items:
-            print "%s" % (item.__str__())
-
     def displayTestScreen(self):
         """
         Display test screen to see if your LCD screen is wokring
         """
         self.message('Hum. body 36,6\xDFC\nThis is test')
-
-    def start(self):
-        """
-        Start and render menu
-        """
-        self.parent = None
-        self.current_option = 0
-        self.selected_option = -1
-        self.render()
 
     def render(self):
         """
@@ -188,84 +164,3 @@ class RpiLCDMenu(object):
             options += "\n " + self.items[0].text
         self.clearDisplay()
         self.message(options)
-
-    def processUp(self):
-        """
-        User triggered up event
-        """
-        if self.current_option == 0:
-            self.current_option = len(self.items) - 1
-        else:
-            self.current_option -= 1
-        self.render()
-
-    def processDown(self):
-        """
-        User triggered down event
-        """
-        if self.current_option == len(self.items) - 1:
-            self.current_option = 0
-        else:
-            self.current_option += 1
-        self.render()
-
-    def processEnter(self):
-        """
-        User triggered enter event
-        """
-        self.items[self.current_option].action()
-
-class MenuItem(object):
-    """
-    A generic menu item
-    """
-
-    def __init__(self, text, menu=None):
-        """
-        :ivar str text: The text shown for this menu item
-        :ivar RpiLCDMenu menu: The menu to which this item belongs
-        """
-        if len(text) > 15 or len(text) == 0:
-            raise NameError('MenuTextTooLong');
-        self.text = text
-        self.menu = menu
-
-    def __str__(self):
-        return "%s" % (self.text)
-
-    def show(self, index):
-        """
-        How this item should be displayed in the menu. Can be overridden, but should keep the same signature.
-        Default is:
-            1 - Item 1
-            2 - Another Item
-        :param int index: The index of the item in the items list of the menu
-        :return: The representation of the item to be shown in a menu
-        :rtype: str
-        """
-        return "%d - %s" % (index + 1, self.text)
-
-    def set_up(self):
-        """
-        Override to add any setup actions necessary for the item
-        """
-        pass
-
-    def action(self):
-        """
-        Override to carry out the main action for this item.
-        """
-        pass
-
-    def clean_up(self):
-        """
-        Override to add any cleanup actions necessary for the item
-        """
-        pass
-
-    def get_return(self):
-        """
-        Override to change what the item returns.
-        Otherwise just returns the same value the last selected item did.
-        """
-        return self.menu.returned_value
