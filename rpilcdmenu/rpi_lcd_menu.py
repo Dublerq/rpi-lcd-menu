@@ -83,6 +83,7 @@ class RpiLCDMenu(BasicMenu):
         # Initialize to default text direction (for romance languages)
         self.displaymode = self.LCD_ENTRYLEFT | self.LCD_ENTRYSHIFTDECREMENT
         self.__write4bits(self.LCD_ENTRYMODESET | self.displaymode)  # set the entry mode
+        return self
 
     def __write4bits(self, bits, char_mode=False):
         """ Send command to LCD """
@@ -101,10 +102,12 @@ class RpiLCDMenu(BasicMenu):
             if bits[i] == "1":
                 self.GPIO.output(self.pins_db[::-1][i-4], True)
         self.__pulseEnable()
+        return self
 
     def __delayMicroseconds(self, microseconds):
-            seconds = microseconds / float(1000000)  # divide microseconds by 1 million for seconds
-            sleep(seconds)
+        seconds = microseconds / float(1000000)  # divide microseconds by 1 million for seconds
+        sleep(seconds)
+        return self
 
     def __pulseEnable(self):
         self.GPIO.output(self.pin_e, False)
@@ -113,6 +116,7 @@ class RpiLCDMenu(BasicMenu):
         self.__delayMicroseconds(1)       # 1 microsecond pause - enable pulse must be > 450ns
         self.GPIO.output(self.pin_e, False)
         self.__delayMicroseconds(1)       # commands need > 37us to settle
+        return self
 
     def clearDisplay(self):
         """
@@ -120,6 +124,7 @@ class RpiLCDMenu(BasicMenu):
         """
         self.__write4bits(self.LCD_CLEARDISPLAY)  # command to clear display
         self.__delayMicroseconds(3000)  # 3000 microsecond sleep, clearing the display takes a long time
+        return self
 
     def message(self, text):
         """ Send string to LCD. Newline wraps to second line"""
@@ -128,7 +133,7 @@ class RpiLCDMenu(BasicMenu):
                 self.__write4bits(0xC0)  # next line
             else:
                 self.__write4bits(ord(char), True)
-
+        return self
     def longMessage(self, text):
         """ Send long string to LCD. 17 char wraps to second line"""
         i = 0
@@ -137,12 +142,14 @@ class RpiLCDMenu(BasicMenu):
             i = i+1
             if i == 16:
                 self.__write4bits(0xC0)
+        return self
 
     def displayTestScreen(self):
         """
         Display test screen to see if your LCD screen is wokring
         """
         self.message('Hum. body 36,6\xDFC\nThis is test')
+        return self
 
     def render(self):
         """
@@ -150,13 +157,13 @@ class RpiLCDMenu(BasicMenu):
         """
         if len(self.items) == 0:
             self.message('Menu is empty')
-            return
+            return self
         elif len(self.items) <= 2:
             options = ">" + self.items[0].text
             if (len(self.items) == 2):
                 options += "\n " + self.items[1].text
             self.message(options)
-            return
+            return self
         options = ">" + self.items[self.current_option].text
         if self.current_option + 1 < len(self.items):
             options += "\n " + self.items[self.current_option + 1].text
@@ -164,3 +171,4 @@ class RpiLCDMenu(BasicMenu):
             options += "\n " + self.items[0].text
         self.clearDisplay()
         self.message(options)
+        return self

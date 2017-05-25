@@ -17,6 +17,7 @@ class BasicMenu(object):
         self.selected_option = -1
         self.clearDisplay()
         self.render()
+        return self
 
     def debug(self, level=1):
         """
@@ -28,6 +29,7 @@ class BasicMenu(object):
                 item.submenu.debug(level+1)
             else:
                 print "|" + "--" * level + ">" + "%s" % (item.__str__())
+        return self
 
     def append_item(self, item):
         """
@@ -36,6 +38,7 @@ class BasicMenu(object):
         """
         item.menu = self
         self.items.append(item)
+        return self
 
     def render(self):
         """
@@ -45,7 +48,7 @@ class BasicMenu(object):
 
     def clearDisplay(self):
         """
-        Clear the screen
+        Clear the screen/
         """
         pass
 
@@ -58,6 +61,7 @@ class BasicMenu(object):
         else:
             self.current_option -= 1
         self.render()
+        return self
 
     def processDown(self):
         """
@@ -68,9 +72,21 @@ class BasicMenu(object):
         else:
             self.current_option += 1
         self.render()
+        return self
 
     def processEnter(self):
         """
         User triggered enter event
         """
-        self.items[self.current_option].action()
+        actionResult = self.items[self.current_option].action()
+        if (isinstance(actionResult,BasicMenu)):
+            return actionResult
+        return self
+
+    def exit(self):
+        """
+        exit submenu and return parent
+        """
+        if self.parent != None:
+            self.parent.render()
+        return self.parent

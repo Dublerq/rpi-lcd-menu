@@ -36,7 +36,7 @@ class SubmenuItem(MenuItem):
         This class overrides this method
         """
         print "starting submenu"
-        self.submenu.start()
+        return self.submenu.start()
 
     def clean_up(self):
         """
