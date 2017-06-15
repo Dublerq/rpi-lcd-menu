@@ -68,7 +68,7 @@ def fooFunction(item_index):
 	print("item %d pressed" % (item_index))
 
 def exitSubMenu(submenu):
-	return submenu.exit();
+	return submenu.exit()
 
 if __name__ == "__main__":
     main()

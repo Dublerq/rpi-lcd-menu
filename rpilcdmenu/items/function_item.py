@@ -32,6 +32,7 @@ class FunctionItem(MenuItem):
         This class overrides this method
         """
         self.return_value = self.function(*self.args, **self.kwargs)
+        return self.return_value
 
     def get_return(self):
         """
