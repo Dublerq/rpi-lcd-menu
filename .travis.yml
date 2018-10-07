@@ -8,20 +8,6 @@ python:
   - 3.5
   - 3.6
 
-matrix:
-  fast_finish: true
-  include:
-    - python: 2.7
-      os: linux
-      language: generic
-      sudo: true
-      env: TOXENV=py27
-    - python: 3.6
-      os: linux
-      language: generic
-      sudo: true
-      env: TOXENV=py36
-
 install:
   - pip install -Ur requirements-test.txt
   - pip install -Ue .
