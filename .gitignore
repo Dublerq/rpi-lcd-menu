@@ -1,3 +1,15 @@
 # Dynamically generated files we don't want to keep
 *.pyc
-*.swp
+*.sw?
+.tox
+.env
+.eggs
+*.pyo
+*.bak
+*.xml
+.cache
+coverage
+.coverage*
+docs/build
+.idea
+*.egg-info

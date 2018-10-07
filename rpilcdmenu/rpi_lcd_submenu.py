@@ -1,4 +1,4 @@
-from rpi_lcd_menu import RpiLCDMenu
+from rpilcdmenu import RpiLCDMenu
 
 class RpiLCDSubMenu(RpiLCDMenu):
 

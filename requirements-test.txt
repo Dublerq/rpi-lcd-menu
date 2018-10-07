@@ -1,0 +1,7 @@
+codecov
+mock
+pytest
+pytest-cov
+pytest-timeout
+tox
+tox-travis

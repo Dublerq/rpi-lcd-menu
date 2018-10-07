@@ -32,4 +32,4 @@ def fooMethod(item_index):
 	print("item %d pressed" % (item_index))
 
 if __name__ == "__main__":
-    main()
+	main()

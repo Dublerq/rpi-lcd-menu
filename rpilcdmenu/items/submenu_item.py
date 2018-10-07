@@ -1,4 +1,4 @@
-from ..menu_item import MenuItem
+from .menu_item import MenuItem
 
 class SubmenuItem(MenuItem):
     """

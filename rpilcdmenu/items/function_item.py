@@ -1,4 +1,4 @@
-from ..rpi_lcd_menu import MenuItem
+from .menu_item import MenuItem
 
 class FunctionItem(MenuItem):
     """
