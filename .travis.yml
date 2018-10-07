@@ -14,10 +14,12 @@ matrix:
     - python: 2.7
       os: linux
       language: generic
+      sudo: true
       env: TOXENV=py27
     - python: 3.6
       os: linux
       language: generic
+      sudo: true
       env: TOXENV=py36
 
 install:
