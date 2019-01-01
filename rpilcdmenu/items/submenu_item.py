@@ -7,7 +7,7 @@ class SubmenuItem(MenuItem):
 
     def __init__(self, text, submenu, menu=None):
         """
-        :ivar CursesMenu self.submenu: The submenu to be opened when this item is selected
+        :ivar BasicMenu self.submenu: The submenu to be opened when this item is selected
         """
         super(SubmenuItem, self).__init__(text=text, menu=menu)
 
@@ -19,7 +19,7 @@ class SubmenuItem(MenuItem):
         """
         Sets the menu of this item.
         Should be used instead of directly accessing the menu attribute for this class.
-        :param CursesMenu menu: the menu
+        :param BasicMenu menu: the menu
         """
         self.menu = menu
         self.submenu.parent = menu
@@ -35,7 +35,6 @@ class SubmenuItem(MenuItem):
         """
         This class overrides this method
         """
-        print "starting submenu"
         return self.submenu.start()
 
     def clean_up(self):
@@ -45,9 +44,3 @@ class SubmenuItem(MenuItem):
         self.submenu.join()
         self.menu.clear_screen()
         self.menu.resume()
-
-    def get_return(self):
-        """
-        :return: The returned value in the submenu
-        """
-        return self.submenu.returned_value

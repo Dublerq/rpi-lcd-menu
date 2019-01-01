@@ -4,10 +4,12 @@ from mock import mock, patch
 
 from rpilcdmenu import RpiLCDMenu
 
+
 def test_rpilcdmenu_cannot_be_initialized_without_gpio_support():
     with mock.patch.dict(sys.modules, {'RPi.GPIO': None}):
         with pytest.raises(ImportError):
-            menu = RpiLCDMenu()
+            RpiLCDMenu()
+
 
 def test_rpilcdmenu_can_be_initialized():
     with mock.patch.dict(sys.modules, {'RPi': mock.MagicMock(), 'RPi.GPIO': mock.MagicMock()}):

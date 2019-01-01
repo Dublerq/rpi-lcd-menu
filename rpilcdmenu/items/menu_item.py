@@ -14,11 +14,11 @@ class MenuItem(object):
         self.menu = menu
 
     def __str__(self):
-        return "%s" % (self.text)
+        return "%s" % self.text
 
     def show(self, index):
         """
-        How this item should be displayed in the menu. Can be overridden, but should keep the same signature.
+        How this item should be displayed in the menu. Can be overridden, but should keep the same pattern
         Default is:
             1 - Item 1
             2 - Another Item
@@ -51,4 +51,4 @@ class MenuItem(object):
         Override to change what the item returns.
         Otherwise just returns the same value the last selected item did.
         """
-        return self.menu.returned_value
+        return self.menu is not None and self.menu.get_return() or None
