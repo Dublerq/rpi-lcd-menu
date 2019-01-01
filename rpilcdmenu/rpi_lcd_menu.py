@@ -1,7 +1,7 @@
-from rpilcdmenu.basic_menu import BasicMenu
+from rpilcdmenu.base_menu import BaseMenu
 from time import sleep
 
-class RpiLCDMenu(BasicMenu):
+class RpiLCDMenu(BaseMenu):
 
     # commands
     LCD_CLEARDISPLAY        = 0x01

@@ -1,4 +1,4 @@
-class BasicMenu(object):
+class BaseMenu(object):
     """
     A generic menu
     """
@@ -8,6 +8,8 @@ class BasicMenu(object):
         """
         self.items = list()
         self.parent = parent
+        self.current_option = 0
+        self.selected_option = -1
 
     def start(self):
         """
@@ -24,7 +26,7 @@ class BasicMenu(object):
         print menu items in console
         """
         for item in self.items:
-            if hasattr(item,'submenu') and isinstance(item.submenu,BasicMenu):
+            if hasattr(item, 'submenu') and isinstance(item.submenu, BaseMenu):
                 print("|" + "--" * (level + 1) + "[" + "%s" % (item.__str__()) + "]")
                 item.submenu.debug(level+1)
             else:
@@ -78,15 +80,15 @@ class BasicMenu(object):
         """
         User triggered enter event
         """
-        actionResult = self.items[self.current_option].action()
-        if (isinstance(actionResult,BasicMenu)):
-            return actionResult
+        action_result = self.items[self.current_option].action()
+        if isinstance(action_result, BaseMenu):
+            return action_result
         return self
 
     def exit(self):
         """
         exit submenu and return parent
         """
-        if self.parent != None:
+        if self.parent is not None:
             self.parent.render()
         return self.parent

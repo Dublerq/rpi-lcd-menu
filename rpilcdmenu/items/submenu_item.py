@@ -7,7 +7,7 @@ class SubmenuItem(MenuItem):
 
     def __init__(self, text, submenu, menu=None):
         """
-        :ivar BasicMenu self.submenu: The submenu to be opened when this item is selected
+        :ivar BaseMenu self.submenu: The submenu to be opened when this item is selected
         """
         super(SubmenuItem, self).__init__(text=text, menu=menu)
 

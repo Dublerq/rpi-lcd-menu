@@ -9,7 +9,7 @@
 *.xml
 .cache
 coverage
-.coverage*
+.coverage
 docs/build
 .idea
 *.egg-info

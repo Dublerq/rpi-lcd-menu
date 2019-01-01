@@ -1,10 +1,10 @@
 from rpilcdmenu import RpiLCDMenu
 
-class RpiLCDSubMenu(RpiLCDMenu):
 
+class RpiLCDSubMenu(RpiLCDMenu):
     def __init__(self, base_menu):
         """
-        description here
+        Initialize SubMenu
         """
         self.GPIO = base_menu.GPIO
         self.pin_rs = base_menu.pin_rs
