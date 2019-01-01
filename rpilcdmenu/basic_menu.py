@@ -25,10 +25,10 @@ class BasicMenu(object):
         """
         for item in self.items:
             if hasattr(item,'submenu') and isinstance(item.submenu,BasicMenu):
-                print "|" + "--" * (level+1) + "[" + "%s" % (item.__str__())  + "]"
+                print("|" + "--" * (level + 1) + "[" + "%s" % (item.__str__()) + "]")
                 item.submenu.debug(level+1)
             else:
-                print "|" + "--" * level + ">" + "%s" % (item.__str__())
+                print("|" + "--" * level + ">" + "%s" % (item.__str__()))
         return self
 
     def append_item(self, item):

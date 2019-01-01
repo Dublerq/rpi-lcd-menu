@@ -1,4 +1,5 @@
-from ..rpi_lcd_menu import MenuItem
+from .menu_item import MenuItem
+
 
 class FunctionItem(MenuItem):
     """
@@ -25,17 +26,17 @@ class FunctionItem(MenuItem):
         else:
             self.kwargs = {}
 
-        self.return_value = None
+        self.returned_value = None
 
     def action(self):
         """
         This class overrides this method
         """
-        self.return_value = self.function(*self.args, **self.kwargs)
-        return self.return_value
+        self.returned_value = self.function(*self.args, **self.kwargs)
+        return self.returned_value
 
     def get_return(self):
         """
         :return: The return value from the function call
         """
-        return self.return_value
+        return self.returned_value

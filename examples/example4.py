@@ -59,7 +59,7 @@ def main():
 			menu = menu.processEnter()
 		prev_button = button
 
-        time.sleep(0.25)
+		time.sleep(0.25)
 
 def fooFunction(item_index):
 	"""
@@ -71,4 +71,4 @@ def exitSubMenu(submenu):
 	return submenu.exit()
 
 if __name__ == "__main__":
-    main()
+	main()

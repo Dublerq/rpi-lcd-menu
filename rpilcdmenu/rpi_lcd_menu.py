@@ -1,5 +1,4 @@
-from basic_menu import *
-from menu_item import *
+from rpilcdmenu.basic_menu import BasicMenu
 from time import sleep
 
 class RpiLCDMenu(BasicMenu):
