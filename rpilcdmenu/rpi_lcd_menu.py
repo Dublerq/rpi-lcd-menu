@@ -134,7 +134,7 @@ class RpiLCDMenu(BasicMenu):
                 self.__write4bits(ord(char), True)
         return self
     def longMessage(self, text):
-        """ Send long string to LCD. 17 char wraps to second line"""
+        """ Send long string to LCD. 17th char wraps to second line"""
         i = 0
         for char in text:
             self.__write4bits(ord(char), True)

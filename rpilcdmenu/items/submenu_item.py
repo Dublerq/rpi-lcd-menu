@@ -15,32 +15,8 @@ class SubmenuItem(MenuItem):
         if menu:
             self.submenu.parent = menu
 
-    def set_menu(self, menu):
-        """
-        Sets the menu of this item.
-        Should be used instead of directly accessing the menu attribute for this class.
-        :param BasicMenu menu: the menu
-        """
-        self.menu = menu
-        self.submenu.parent = menu
-
-    def set_up(self):
-        """
-        This class overrides this method
-        """
-        self.menu.pause()
-        self.menu.clear_screen()
-
     def action(self):
         """
-        This class overrides this method
+        On Subitem click
         """
         return self.submenu.start()
-
-    def clean_up(self):
-        """
-        This class overrides this method
-        """
-        self.submenu.join()
-        self.menu.clear_screen()
-        self.menu.resume()
