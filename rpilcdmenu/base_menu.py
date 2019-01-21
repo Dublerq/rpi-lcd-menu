@@ -17,8 +17,8 @@ class BaseMenu(object):
         """
         self.current_option = 0
         self.selected_option = -1
-        self.clearDisplay()
         self.render()
+
         return self
 
     def debug(self, level=1):

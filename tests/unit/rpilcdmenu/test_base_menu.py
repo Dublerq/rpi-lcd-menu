@@ -1,7 +1,6 @@
 import mock
 from rpilcdmenu.base_menu import BaseMenu
 
-
 def test_basemenu_can_be_initialized_entered_and_exited():
     base_menu = BaseMenu(mock.Mock())
     base_menu.start()
@@ -27,7 +26,6 @@ def test_basemenu_can_append_scroll_and_select_menuitems():
 
     base_menu.processEnter()
 
-
     target_menuitem_mock.action.assert_called_once()
 
 
@@ -46,6 +44,12 @@ def test_basemenu_process_process_enter_renders_submenu_when_submenu_item_select
 
     assert submenu_mock == base_menu.processEnter()
 
+
+def test_basemenu_clearDisplay_exists():
+    base_menu = BaseMenu(mock.Mock())
+    base_menu.clearDisplay()
+
+
 def test_basemenu_debug_returns_subitem_debug_info():
     base_menu = BaseMenu()
     base_menu.start()
@@ -57,7 +61,6 @@ def test_basemenu_debug_returns_subitem_debug_info():
     submenuitem_mock.submenu.__class__ = BaseMenu
     base_menu.append_item(menuitem_mock)
     base_menu.append_item(submenuitem_mock)
-
 
     base_menu.debug()
     submenuitem_mock.submenu.debug.assert_called_once()
