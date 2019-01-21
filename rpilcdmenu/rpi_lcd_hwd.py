@@ -58,6 +58,10 @@ class RpiLCDHwd:
         self.pin_e = pin_e
         self.pins_db = pins_db
 
+        self.displaycontrol = None
+        self.displayfunction = None
+        self.displaymode = None
+
         self.GPIO.setmode(GPIO.BCM)
         self.GPIO.setup(self.pin_rs, GPIO.OUT)
         self.GPIO.setup(self.pin_e, GPIO.OUT)
