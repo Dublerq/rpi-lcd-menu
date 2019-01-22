@@ -12,7 +12,7 @@ Tested on python 2.7 and 3.4+.
 
 Configuration used in examples:
 
-![Configuration used in examples](/doc/configuration.jpg)
+![Configuration used in examples](/doc/configuration.png)
 
 # Code examples
 
