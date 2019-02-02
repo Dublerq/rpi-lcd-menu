@@ -28,29 +28,15 @@ def test_rpilcdmenu_message_sends_bytes_of_message_to_rpi(LCDHwdMock):
 
     assert LCDHwdMockInstance.write4bits.mock_calls == [call(ord("1"), True), call(0xC0)]
 
-
 @patch('rpilcdmenu.rpi_lcd_menu.RpiLCDHwd')
-def test_rpilcdmenu_longMessage_sends_bytes_of_message_to_rpi(LCDHwdMock):
+def test_rpilcdmenu_message_breaks_line_after_16_chars(LCDHwdMock):
     LCDHwdMockInstance = MagicMock()
     LCDHwdMock.return_value = LCDHwdMockInstance
 
     menu = RpiLCDMenu()
     LCDHwdMockInstance.reset_mock()
 
-    menu.longMessage("1")
-
-    LCDHwdMockInstance.write4bits.assert_called_once_with(ord("1"), True)
-
-
-@patch('rpilcdmenu.rpi_lcd_menu.RpiLCDHwd')
-def test_rpilcdmenu_longMessage_breaks_line_after_16_chars(LCDHwdMock):
-    LCDHwdMockInstance = MagicMock()
-    LCDHwdMock.return_value = LCDHwdMockInstance
-
-    menu = RpiLCDMenu()
-    LCDHwdMockInstance.reset_mock()
-
-    menu.longMessage("11111111111111112")
+    menu.message("11111111111111112")
 
     assert LCDHwdMockInstance.write4bits.mock_calls == [
         call(ord("1"), True) for i in range(16)
