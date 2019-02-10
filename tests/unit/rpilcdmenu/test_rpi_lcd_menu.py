@@ -43,6 +43,20 @@ def test_rpilcdmenu_message_breaks_line_after_16_chars(LCDHwdMock):
     ] + [call(0xC0), call(ord("2"), True)]
 
 @patch('rpilcdmenu.rpi_lcd_menu.RpiLCDHwd')
+def test_rpilcdmenu_message_is_trimmed_to_two_lines(LCDHwdMock):
+    LCDHwdMockInstance = MagicMock()
+    LCDHwdMock.return_value = LCDHwdMockInstance
+
+    menu = RpiLCDMenu()
+    LCDHwdMockInstance.reset_mock()
+
+    menu.message("1\n1\n1")
+
+    assert LCDHwdMockInstance.write4bits.mock_calls == [
+        call(ord("1"), True), call(0xC0), call(ord("1"), True), call(0xC0)
+    ]
+
+@patch('rpilcdmenu.rpi_lcd_menu.RpiLCDHwd')
 def test_rpilcdmenu_displayTestScreen_sends_dummy_message_to_rpi(LCDHwdMock):
     LCDHwdMockInstance = MagicMock()
     LCDHwdMock.return_value = LCDHwdMockInstance
