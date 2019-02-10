@@ -8,4 +8,4 @@ class RpiLCDSubMenu(RpiLCDMenu):
         """
         self.lcd = base_menu.lcd
 
-        super((self.__class__.__bases__)[0], self).__init__()
+        super(RpiLCDMenu, self).__init__(base_menu)

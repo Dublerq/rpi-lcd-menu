@@ -6,7 +6,7 @@ class MenuItem(object):
     def __init__(self, text, menu=None):
         """
         :ivar str text: The text shown for this menu item
-        :ivar RpiLCDMenu menu: The menu to which this item belongs
+        :ivar RpiLCDMenu menu: The menu which this item belongs to
         """
         if len(text) > 15 or len(text) == 0:
             raise NameError('MenuTextTooLong');
