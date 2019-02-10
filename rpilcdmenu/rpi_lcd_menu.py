@@ -27,16 +27,21 @@ class RpiLCDMenu(BaseMenu):
     def message(self, text):
         """ Send long string to LCD. 17th char wraps to second line"""
         i = 0
+        lines = 0
 
         for char in text:
             if char == '\n':
                 self.lcd.write4bits(0xC0)  # next line
                 i = 0
+                lines += 1
             else:
                 self.lcd.write4bits(ord(char), True)
                 i = i + 1
+
             if i == 16:
-                self.lcd.write4bits(0xC0)
+                self.lcd.write4bits(0xC0)  # last char of the line
+            elif lines == 2:
+                break
 
         return self
 
