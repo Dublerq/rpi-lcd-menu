@@ -21,3 +21,4 @@ Sample snippets are stored in examples directory. Their content is as follows:
 * example2.py - create 1-level menu and test software navigation through entries
 * example3.py - create 2-level menu (menu with submenus) and test software navigation through entries
 * example4.py - example3.py with physical navigation using analog joystick and buttons (configuration as on image above)
+* example5.py - scrollable message view with physical navigation as in example4

@@ -11,7 +11,7 @@ class FunctionItem(MenuItem):
         :ivar function: The function to be called
         :ivar list args: An optional list of arguments to be passed to the function
         :ivar dict kwargs: An optional dictionary of keyword arguments to be passed to the function
-        :ivar return_value: the value returned by the function, None if it hasn't been called yet.
+        :ivar RpiLCDMenu menu: The menu which this item belongs to
         """
         super(FunctionItem, self).__init__(text=text, menu=menu)
 
