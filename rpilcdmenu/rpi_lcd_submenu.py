@@ -6,7 +6,7 @@ class RpiLCDSubMenu(RpiLCDMenu):
         """
         Initialize SubMenu
         """
-        self.GPIO = base_menu.GPIO
+        self.lcd = base_menu.lcd
         self.pin_rs = base_menu.pin_rs
         self.pin_e = base_menu.pin_e
         self.pins_db = base_menu.pins_db
