@@ -8,8 +8,11 @@ class MenuItem(object):
         :ivar str text: The text shown for this menu item
         :ivar RpiLCDMenu menu: The menu which this item belongs to
         """
+
         if len(text) > 15 or len(text) == 0:
-            raise NameError('MenuTextTooLong');
+            # removed text length limit for menus as theres a scrolling option
+            pass
+            # raise NameError('MenuTextTooLong');
         self.text = text
         self.menu = menu
 

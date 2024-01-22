@@ -92,3 +92,13 @@ class BaseMenu(object):
         if self.parent is not None:
             self.parent.render()
         return self.parent
+
+    def remove_item(self, item):
+        """
+        Remove an item from the menu
+        :param MenuItem item: The item to be removed
+        """
+        item.menu = self
+        self.items.remove(item)
+        return self
+
